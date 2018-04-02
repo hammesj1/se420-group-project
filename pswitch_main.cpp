@@ -1,72 +1,86 @@
 ///////////////////////////////
-// CS225 SPRING 2016 //////////
-// CRISTIAN GARCIA ////////////
-///////////////////////////////
+//
+// CS225 SPRING 2016
+// CRISTIAN GARCIA
+//
 ///////////////////////////////
 
-// Include Directives /////////
+// Include Directives
 #include<iostream>
 #include<string>
 #include<sstream>
 #include<unistd.h>
+
+// Project Classess
 #include "packetswitch.hpp"
-#include "network.hpp"
 #include "ethernetswitch.hpp"
 #include "wirelessrouter.hpp"
-///////////////////////////////
 
-///////////////////////////////
+//
 using namespace std;
-const int max_pswitch = 60;
-const int max_network = 60;
+
+// Global Variables
 const int ARR_MAX = 60;
 const int PER_GROUP = 20;
-PacketSwitch *mixed_array[ARR_MAX];// = {new EthernetSwitch, new WirelessRouter, new PacketSwitch};
-// Boolean Logic //////////////
+const int max_pswitch = 60;
+const int max_network = 60;
+
+// = {new EthernetSwitch, new WirelessRouter, new PacketSwitch};
+PacketSwitch *mixed_array[ARR_MAX];
+
+// Boolean Logic
 bool interactive = true;
 bool done = false;
-// Pointers ///////////////////
+
+// Pointers
 PacketSwitch **pswitch_array;///top
 Network *network_array;
 PacketSwitch **cur_pswitch;
 Network *cur_network;
-///////////////////////////////
-// Function Prototypes ////////
+
+// Function Prototypes
 int print_menu();
 int process_menu_in(string);
 int init_mixed_array();
-///////////////////////////////
 
-
-// Start of Main Function ////////////////////////////////////////////////////////////
+// Start of Main Function
 int main()
 {
-   init_mixed_array();
-   // Create Array of Packket Switch Objects /////////////////////////////////////////
-   //PacketSwitch *loc_pswitch_array[max_pswitch];
-   Network loc_network_array[max_network];
    string input_line;
 
-   // Point to Packet Swtich Array ///////////////////////////////////////////////////
-   pswitch_array = mixed_array;//loc_pswitch_array;
+   // Create Array of Packet Switch Objects
+   init_mixed_array();
+   // Create Array of Network Objects
+   Network loc_network_array[max_network];
+
+   // Point to Packet Swtich Array
+   pswitch_array = mixed_array;
+   // Point to Network Array
    network_array = loc_network_array;
 
-   // Point ot First Object in Packet Switch Array ///////////////////////////////////
-   cur_pswitch = mixed_array;///loc_pswitch_array;
+   // Point to First Object in Packet Switch Array
+   cur_pswitch = mixed_array;
+   // Point to First Object in Network Array
    cur_network = loc_network_array;
 
-   // Determine Input Stream as Interactive Or Test File /////////////////////////////
+   // Determine Input Stream as Interactive Or Test File
    interactive = isatty(STDIN_FILENO);
+
+   // Interactive
    if (interactive) print_menu();
 
-   // Execute Packet Switch Program Until Quit Is Selected ///////////////////////////
+   // Execute Packet Switch Program Until Quit Is Selected
    while (!done)
    {
+	  // Identify Current Packetswitch Being Worked On
       cout << endl << "Menu [" << (cur_pswitch - pswitch_array) << "] : ";
+	  // Get Input Stream
       getline(cin, input_line);
+	  // Process Input Line
       process_menu_in(input_line);
    }
-   // Quit Was Selected Terminate Packet Switch Program //////////////////////////////
+
+   // Quit Was Selected Terminate Packet Switch Program
    cout << "You have selected to quit.\n\n"
            "Packet Switch Program Terminated - Goodbye!\n" << endl;
    return 0;
@@ -89,7 +103,7 @@ int init_mixed_array()
               mixed_array[i] = new PacketSwitch();
               break;
           default:
-              std::cout << "ERROR : in array initialize" << std::endl;
+              std::cout << "ERROR : In array please initialize!" << std::endl;
               return -1;
        }
      }
