@@ -86,6 +86,7 @@ int main()
    return 0;
 }
 
+//
 int init_mixed_array()
 {
    for (int i = 0; i < ARR_MAX; i++)
@@ -110,7 +111,7 @@ int init_mixed_array()
    return 0;
 }
 
-// Display Packet Switch Menu ////////////////////////////////////////////////////////
+// Display Packet Switch Menu
 int print_menu()
 {
    cout << "/*************************************************************/\n"
@@ -148,23 +149,25 @@ int print_menu()
    return 0;
 }
 
-// Execute Packet Switch Menu Process ////////////////////////////////////////////////
+// Execute Packet Switch Menu Process
 int process_menu_in(string menu_line)
 {
-   // Determine Interactive Process or Test File Process /////////////////////////////
+   // Determine Interactive Process or Test File Process
    char menuchar;
    istringstream in_string(menu_line);
    in_string >> menuchar;
    istream *in_stream;
-   // Execute Interactive Stream Process, Else Execute Test File Stream Process //////
+
+   // Execute Interactive Stream Process, Else Execute Test File Stream Process
    if (interactive)
      in_stream = &cin;
    else
      in_stream = &in_string;
-   // Execute Packet Swtich Process //////////////////////////////////////////////////
+
+   // Execute Packet Swtich Process
    switch(toupper(menuchar))
    {
-      // Display All Modified Packet Switches ////////////////////////////////////////
+      // Display All Modified Packet Switches
       case '*':
       {
         cout << "\n\n=== Packet Switches ===\n";
@@ -188,27 +191,15 @@ int process_menu_in(string menu_line)
             cout << *(static_cast<PacketSwitch*>(pswitch_array[z]));
           }
         }
-        //int n = 0;
-        //while(n < max_pswitch)
-        //{
-        //  if((*pswitch_array[n]).isempty())
-        //    n++;
-        //  else
-        //   {
-        //    cout << "PacketSwitch[" << n << "]" << endl;
-        //   cout << pswitch_array[n];
-        //    //cur_pswitch++;
-        //    n++;
-        //    //cur_pswitch = &cur_pswitch[n];
-        //   }
-        //}
       }
       break;
-      // Display Packet Switche Memory Usage //////////////////////////////////////////
+
+      // Display Packet Switche Memory Usage
       case 'B':
         (*cur_pswitch)->display_mem_usage();
       break;
-      // Select Succeeding Packet Switch /////////////////////////////////////////////
+
+      // Select Succeeding Packet Switch
       case '+':
       {
        int i = 0;
@@ -217,7 +208,8 @@ int process_menu_in(string menu_line)
        cout << "Index set to " << (cur_pswitch - pswitch_array) << endl;
       }
       break;
-      // Select Preceding Packet Switch //////////////////////////////////////////////
+
+      // Select Preceding Packet Switch
       case '-':
       {
        int i = 0;
@@ -226,70 +218,63 @@ int process_menu_in(string menu_line)
        cout << "Index set to " << (cur_pswitch - pswitch_array) << endl;
       }
       break;
-      // Create Network Set Label, IP Address, and Size //////////////////////////////
+
+      // Create Network Set Label, IP Address, and Size
       case '>':
       {
-        //int new_net_tkr = (cur_network - network_array);
         string new_label, new_ip_address;
         int new_num_nodes;
         cout << "Enter Network Information\n";
         cout << "\nEnter Network Label: ";
         (*in_stream) >> new_label;
-        //getline((*in_stream), new_label);
         cur_network->set_label(new_label);
         cout << "\nEnter Network IP Address: ";
         (*in_stream) >> new_ip_address;
-        //getline((*in_stream), new_ip_address);
         cur_network->set_ip_address(new_ip_address);
         cout << "\nEnter Network Number Nodes: ";
         (*in_stream) >> new_num_nodes;
         if(interactive)cin.get();
         cur_network->set_num_nodes(new_num_nodes);
-        //(*cur_pswitch)->set_network_ptr(cur_network);
-        //(*cur_pswitch)->set_net_tkr(new_net_tkr);
-        //int i = 0;
-        //i++;
         cur_network++;
       }
         break;
 
+      //
       case 'I':
       {
-                                                   //cur_network = &network_array[0];
        int i;
        cout << "Select Network Index: ";
        (*in_stream) >> i;
        if(interactive)cin.get();
-                                                  //cur_network = &cur_network[i];
        cout << "Network Index for Current Packet Switch To:" << (cur_network - network_array) << endl;
-       (*cur_pswitch)->set_network_ptr(&network_array[i]);                     ////(cur_network);
+       (*cur_pswitch)->set_network_ptr(&network_array[i]);
        cin.get();
       }
       break;
 
-      // Select Packet Switch Number /////////////////////////////////////////////////
+      // Select Packet Switch Number
       case '#':
       {
-                       //cur_pswitch = &mixed_array[0];//pswitch_array[0];
        int i = 0;
        cout << "Select a Packet Swith number: ";
        (*in_stream) >> i;
        if(interactive)cin.get();
-       cur_pswitch = (pswitch_array +i);    //&mixed_array[i];///cur_pswitch[i];
+       cur_pswitch = (pswitch_array +i);
        cout << "Index set to " << (cur_pswitch - pswitch_array) << endl;
       }
       break;
-      //Set Packet Switch Data to Blank //////////////////////////////////////////////
+
+      //Set Packet Switch Data to Blank
       case '0':
         (*cur_pswitch)->set_blank();
       break;
-      // Display Current Packet Switch Data //////////////////////////////////////////
+
+      // Display Current Packet Switch Data
       case 'D':
       {
         int i;
         i = cur_pswitch - mixed_array;
         cout << "Packet Switch [" << i << "]" << endl;
-
         if(i >= 0 && i <= 19)
         {
           cout << *(static_cast<EthernetSwitch*>(*cur_pswitch));
@@ -302,11 +287,10 @@ int process_menu_in(string menu_line)
         {
           cout << *(*cur_pswitch);
         }
-        //(*cur_pswitch)->get_network_ptr()->toCout();
-        //network_array[i].toCout();
       }
       break;
-      // Set Packet Switch Vendor ////////////////////////////////////////////////////
+
+      // Set Packet Switch Vendor
       case 'V':
       {
         string new_vendor;
@@ -316,17 +300,18 @@ int process_menu_in(string menu_line)
         (*cur_pswitch)->set_vendor(new_vendor);
       }
         break;
-      // Set Packet Switch Model /////////////////////////////////////////////////////
+
+      // Set Packet Switch Model
       case 'M':
       {
         string new_model;
         cout << "Enter Switch Model: ";
         (*in_stream) >> new_model;
-        //getline((*in_stream), new_model); migght want to go back
         (*cur_pswitch)->set_model(new_model);
       }
         break;
-      // Set Packet Switch Number of Ports ///////////////////////////////////////////
+
+      // Set Packet Switch Number of Ports
       case 'N':
       {
         int new_num_ports;
@@ -336,7 +321,8 @@ int process_menu_in(string menu_line)
         (*cur_pswitch)->set_num_ports(new_num_ports);
       }
         break;
-      // Set Packet Switch Per Port Speed ////////////////////////////////////////////
+
+      // Set Packet Switch Per Port Speed
       case 'T':
       {
         double new_pps;
@@ -346,7 +332,8 @@ int process_menu_in(string menu_line)
         (*cur_pswitch)->set_pps(new_pps);
       }
         break;
-      // Set Packet Switch Power Cosumption //////////////////////////////////////////
+
+      // Set Packet Switch Power Cosumption
       case 'E':
       {
         double new_power;
@@ -356,7 +343,8 @@ int process_menu_in(string menu_line)
         (*cur_pswitch)->set_power(new_power);
       }
         break;
-      // Set Packet Switch Dimensions ////////////////////////////////////////////////
+
+      // Set Packet Switch Dimensions
       case 'S':
       {
         float new_height, new_width, new_depth;
@@ -368,7 +356,8 @@ int process_menu_in(string menu_line)
         (*cur_pswitch)->set_dimensions(new_height, new_width, new_depth);
       }
         break;
-      // Add Packet Switch Component //////////////////////////////////////////////////
+
+      // Add Packet Switch Component
       case 'C':
       {
         string new_name;
@@ -384,10 +373,10 @@ int process_menu_in(string menu_line)
         (*in_stream) >> new_price;
         (*cur_pswitch)->get_component((*cur_pswitch)->cindex)->set_price(new_price);
         (*cur_pswitch)->cindex++;
-
       }
         break;
-      ////////////////////////////////////////////////////////////////////////////////////
+
+      //
       case 'R':
       {
         int new_rating;
@@ -395,10 +384,10 @@ int process_menu_in(string menu_line)
         (*in_stream) >> new_rating;
         if(interactive)cin.get();
         (*(static_cast<EthernetSwitch*>(*cur_pswitch))).set_rating(new_rating);
-        //(*cur_pswitch)->set_rating(new_rating);;
       }
         break;
-      /////////////////////////////////////////////////////////////////////////////////////
+
+	  //
       case 'W':
       {
         string new_ieee_std;
@@ -406,10 +395,10 @@ int process_menu_in(string menu_line)
         (*in_stream) >> new_ieee_std;
         if(interactive)cin.get();
         (*(static_cast<WirelessRouter*>(*cur_pswitch))).set_ieee_std(new_ieee_std);
-        //(*cur_pswitch)->set_vendor(new_vendor);
       }
         break;
-      /////////////////////////////////////////////////////////////////////////////////////
+
+      //
       case 'X':
       {
         double new_data_rate;
@@ -417,10 +406,10 @@ int process_menu_in(string menu_line)
         (*in_stream) >> new_data_rate;
         if(interactive)cin.get();
         (*(static_cast<WirelessRouter*>(*cur_pswitch))).set_data_rate(new_data_rate);
-        //(*cur_pswitch)->set_pps(new_pps);
       }
         break;
-      /////////////////////////////////////////////////////////////////////////////////////////
+
+      //
       case 'F':
       {
         int index = cur_pswitch - pswitch_array;
@@ -436,21 +425,15 @@ int process_menu_in(string menu_line)
         {
           static_cast<WirelessRouter*>(*cur_pswitch)->set_packet_size(new_packet_size);
         }
-        //if (0 => index && <= 19)
-        //  (*(static_cast<EthernetSwitch*>(*cur_pswitch))).set_packet_size(new_packet_size);
-        //else
-        //  (*(static_cast<WirelessRouter*>(*cur_pswitch))).set_packet_size(new_packet_size);
-        //need if else statament for above
-        //(*cur_pswitch)->set_rating(new_rating);;
       }
         break;
-      /////////////////////////////////////////////////////////////////////////////////////////
+
+      //
       case 'A':
       {
         cout << "\n\n=== Ethernet Switches in Order ===\n";
         int rc;
         int ec;
-
         for(rc = 0; rc <= 10; rc++)
         {
           for(ec = 0; ec < 20; ec++)
@@ -461,28 +444,15 @@ int process_menu_in(string menu_line)
             }
           }
         }
-
-        //int n = 0;
-        //while(n < max_pswitch)
-        //{
-        //  if(pswitch_array[n].isempty())
-        //    n++;
-        //  else
-        //   {
-        //    cout << "PacketSwitch[" << n << "]" << endl;
-        //    cout << pswitch_array[n];
-        //    //cur_pswitch++;
-        //    n++;
-        //    cur_pswitch = &cur_pswitch[n];
-        //   }
-        //}
       }
       break;
-      // Display Packet Switch Menu //////////////////////////////////////////////////
+
+      // Display Packet Switch Menu
       case 'P':
         print_menu();
         break;
-      // Terminate Packet Switch Program /////////////////////////////////////////////
+
+      // Terminate Packet Switch Program
       case 'Q':
         done = true;
         break;
@@ -490,4 +460,4 @@ int process_menu_in(string menu_line)
   return 0;
 }
 
-// End of Main Function //////////////////////////////////////////////////////////////
+// End of Main Function
