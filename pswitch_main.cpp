@@ -73,7 +73,7 @@ int main()
    while (!done)
    {
 	  // Identify Current Packetswitch Being Worked On
-      cout << endl << "Menu [" << (cur_pswitch - pswitch_array) << "] : ";
+      cout << endl << "Menu for object [" << (cur_pswitch - pswitch_array) << "] : ";
 	  // Get Input Stream
       getline(cin, input_line);
 	  // Process Input Line
@@ -124,7 +124,7 @@ int print_menu()
            "/*    --------------------------------------------------     */\n"
            "/*     *  : Display Data For All Objects                     */\n"
            "/*     B  : Display Program Memory Usage                     */\n"
-           "/*     +/-: Succeeding / Preceding Object In The Array       */\n"
+           "/*     +/-: Succeeding / Preceding Object                    */\n"
            "/*     #  : Set The Selected Object                          */\n"
            "/*     0  : Clear The Selected Object's Data                 */\n"
            "/*     >  : Create A New Network                             */\n"
@@ -164,10 +164,10 @@ int process_menu_in(string menu_line)
    else
      in_stream = &in_string;
 
-   // Execute Packet Swtich Process
+   // Execute Switch Process
    switch(toupper(menuchar))
    {
-      // Display All Modified Packet Switches
+      // Display All Modified Objects
       case '*':
       {
         cout << "\n\n=== Packet Switches ===\n";
@@ -187,19 +187,21 @@ int process_menu_in(string menu_line)
 
           else if( z >= 40 && z <= 59 && (pswitch_array[z])->isempty() == 0)
           {
-            cout << "packeswitch print[" << z << "]" <<endl;
+            cout << "Packeswitch print[" << z << "]" <<endl;
             cout << *(static_cast<PacketSwitch*>(pswitch_array[z]));
           }
         }
       }
       break;
 
-      // Display Packet Switche Memory Usage
+      // Display Program Memory Usage
       case 'B':
+	    //packetswitch.cpp
         (*cur_pswitch)->display_mem_usage();
       break;
 
-      // Select Succeeding Packet Switch
+      // Select Succeeding Obect
+	  // ***BUG*** able to exit scope of available memory space.
       case '+':
       {
        int i = 0;
@@ -209,7 +211,8 @@ int process_menu_in(string menu_line)
       }
       break;
 
-      // Select Preceding Packet Switch
+      // Select Preceding Obect
+	  // ***BUG*** able to exit scope of available memory space.
       case '-':
       {
        int i = 0;
@@ -220,6 +223,7 @@ int process_menu_in(string menu_line)
       break;
 
       // Create Network Set Label, IP Address, and Size
+	  // ***BUG*** network label gets cut off on first space
       case '>':
       {
         string new_label, new_ip_address;
@@ -239,16 +243,17 @@ int process_menu_in(string menu_line)
       }
         break;
 
-      //
+      // Set network to current object
+	  // ***ADD*** a display for user to use with available networks.
       case 'I':
       {
        int i;
        cout << "Select Network Index: ";
        (*in_stream) >> i;
        if(interactive)cin.get();
+	   (*cur_pswitch)->set_network_ptr(&network_array[i]);
        cout << "Network Index for Current Packet Switch To:" << (cur_network - network_array) << endl;
-       (*cur_pswitch)->set_network_ptr(&network_array[i]);
-       cin.get();
+	   cin.get();
       }
       break;
 
@@ -288,7 +293,7 @@ int process_menu_in(string menu_line)
           cout << *(*cur_pswitch);
         }
       }
-      break;
+        break;
 
       // Set Packet Switch Vendor
       case 'V':
@@ -307,6 +312,7 @@ int process_menu_in(string menu_line)
         string new_model;
         cout << "Enter Switch Model: ";
         (*in_stream) >> new_model;
+		if(interactive)cin.get();
         (*cur_pswitch)->set_model(new_model);
       }
         break;
@@ -373,10 +379,11 @@ int process_menu_in(string menu_line)
         (*in_stream) >> new_price;
         (*cur_pswitch)->get_component((*cur_pswitch)->cindex)->set_price(new_price);
         (*cur_pswitch)->cindex++;
+		if(interactive)cin.get();
       }
         break;
 
-      //
+      //Set Rating
       case 'R':
       {
         int new_rating;
@@ -387,7 +394,7 @@ int process_menu_in(string menu_line)
       }
         break;
 
-	  //
+	  //Set IEEE Satadard
       case 'W':
       {
         string new_ieee_std;
@@ -398,7 +405,7 @@ int process_menu_in(string menu_line)
       }
         break;
 
-      //
+      // Set Data Rate
       case 'X':
       {
         double new_data_rate;
@@ -409,7 +416,7 @@ int process_menu_in(string menu_line)
       }
         break;
 
-      //
+      // Set Packet Size
       case 'F':
       {
         int index = cur_pswitch - pswitch_array;
@@ -428,7 +435,7 @@ int process_menu_in(string menu_line)
       }
         break;
 
-      //
+      // Ethernet Switches by Order
       case 'A':
       {
         cout << "\n\n=== Ethernet Switches in Order ===\n";
