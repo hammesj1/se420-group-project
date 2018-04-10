@@ -1,17 +1,17 @@
-////////////..///////////...////
-// CS225 Spring 2016 //////////
+///////////////////////////////
+// SQA Project 2018 ///////////
 // Cristian Garcia ////////////
+// Josh Hammes ////////////////
 ///////////////////////////////
 
-// Include Derectives /////////
+// Include Derectives
 #include "network.hpp"
 #include <iostream>
 #include <string>
+// Implementation Section
 
-// Implementation Section: ///////////////////////////////////////////////////////////
+// Default Create and Keep Track Number of Networks
 int Network::num_alive=0;
-
-// Default Create and Keep Track Number of Packet Switches ///////////////////////////
 Network::Network()
 {
    label = "";
@@ -20,24 +20,13 @@ Network::Network()
    num_alive++;
 }
 
-// Default Set Array of Network Objects ////////////////////////////////////////
-/////Network::Network(std::string new_label, std::string new_ip_address, int new_num_nodes)
-/////{
-/////   label = new_label;
-/////   ip_address = new_ip_address;
-/////   num_nodes = new_num_nodes;
-   /////pps = new_pps;
-   /////power = new_power;
-/////   num_alive++;
-/////} 
-
-// Destroy and Delete Track of Number of Packet Switches /////////////////////////////
+// Destroy and Delete Track of Number of Networks
 Network::~Network()
 {
    num_alive--;
-} 
+}
 
-// Check if Network is Empty or Defined as Default ////////////////////////////
+// Check if Network is Empty or Defined as Default
 int Network::isempty()
 {
   if(label == "" && ip_address == "" && num_nodes == 0)
@@ -46,28 +35,28 @@ int Network::isempty()
    return 0;
 }
 
-// Receive Information from Main and Set Network Object Label /////////////////
+// Receive Information from Main App and Set Network Object Label
 int Network::set_label(std::string new_label)
 {
    label = new_label;
    return 0;
 }
 
-// Receive Information from Main and Network Object IP Address //////////////////
+// Receive Information from Main App and Set Network Object IP Address
 int Network::set_ip_address(std::string new_ip_address)
 {
    ip_address = new_ip_address;
    return 0;
 }
 
-// Receive Information from Main and Set Network Object Number of Nodes ////////
+// Receive Information from Main App and Set Network Object Number of Nodes
 int Network::set_num_nodes(int new_num_nodes)
 {
    num_nodes = new_num_nodes;
    return 0;
 }
 
-// Set All Network Object Data to Blank or Default /////////////////////////////
+// Set All Network Object Data to Blank or Default
 int Network::set_blank()
 {
    label = "";
@@ -76,21 +65,13 @@ int Network::set_blank()
    return 0;
 }
 
-// Retrive Number of Alive Network Objects /////////////////////////////////////
+// Retrive Number of Alive Network Objects
 int Network::get_num_alive()
 {
    return num_alive;
 }
 
-// Determine and Display Packet Switch Array Memory Usage ////////////////////////////
-/////int PacketSwitch::display_mem_usage()
-/////{
-/////  std::cout << "Program Memory Usage: " << get_num_alive()* sizeof(PacketSwitch) << std::endl;
-/////  return 0;
-/////}
-
-
-// Retrieve Network Object Information /////////////////////////////////////
+// Retrieve Network Object or Ojects Information
 int Network::toCout()
 {
    std::cout << "Connected Network Details" << std::endl;

@@ -123,6 +123,7 @@ int print_menu()
            "/*             40 - 59: Packet Switch Objects                */\n"
            "/*    --------------------------------------------------     */\n"
            "/*     *  : Display Data For All Objects                     */\n"
+	         "/*     !  : Display Available Networks                       */\n"
            "/*     B  : Display Program Memory Usage                     */\n"
            "/*     +/-: Succeeding / Preceding Object                    */\n"
            "/*     #  : Set The Selected Object                          */\n"
@@ -190,6 +191,28 @@ int process_menu_in(string menu_line)
             cout << "Packeswitch print[" << z << "]" <<endl;
             cout << *(static_cast<PacketSwitch*>(pswitch_array[z]));
           }
+        }
+      }
+      break;
+
+	  // Display Available Networks or Advice There is None.
+	  case '!':
+      {
+        cout << "\n\n=== Available Networks ===\n";
+		int net_empty = 0;
+        for(int z = 0; z < max_network; z++)
+        {
+          if(z >= 0 && z <= 59 && (&network_array[z])->isempty() == 0)
+          {
+            cout << "\nNetwork Index Number [" << z << "]" <<endl;
+            cout << network_array[z];
+			net_empty = 1;
+          }
+
+		  else if(net_empty == 0 && z == 59)
+		  {
+			cout << "\nNo Newtworks Defined\n\nPlease Create a New Network" <<endl;
+		  }
         }
       }
       break;
