@@ -10,7 +10,6 @@
 #include <iostream>
 #include <string>
 #include "network.hpp"
-#include "component.hpp"
 using std::ostream;
 // Decleration Section: //////////////////////////////////////////////////////////////
 class PacketSwitch
@@ -33,17 +32,14 @@ class PacketSwitch
      Network *net_ptr;
      //double thermal_output;
      //double packet_per_sec;
-  
+
    protected:
      int num_ports;
-     double pps; 
+     double pps;
      double packets_per_sec;
-     //Component *ptr_component;
 
    public:
-     Component loc_component_array[20];
-     int cindex; //int cindex = 0;
-     Component* get_component(int index);
+     int cindex;
      // Constructor //////////////////////////////////////////////////////////////////
      PacketSwitch();
 
@@ -64,7 +60,7 @@ class PacketSwitch
      int set_blank();
      int set_network_ptr( Network* );
      virtual double compute_packetspersec();
-     
+
      // Accessors ///////////////////////////////////////////
      static int get_num_alive();
      std::string get_vendor()const{return vendor;}

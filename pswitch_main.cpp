@@ -123,7 +123,7 @@ int print_menu()
            "/*             40 - 59: Packet Switch Objects                */\n"
            "/*    --------------------------------------------------     */\n"
            "/*     *  : Display Data For All Objects                     */\n"
-	         "/*     !  : Display Available Networks                       */\n"
+		   "/*     !  : Display Available Networks                       */\n"
            "/*     B  : Display Program Memory Usage                     */\n"
            "/*     +/-: Succeeding / Preceding Object                    */\n"
            "/*     #  : Set The Selected Object                          */\n"
@@ -137,7 +137,6 @@ int print_menu()
            "/*     T  : Set Packet Switch Per Port Speed                 */\n"
            "/*     E  : Set Packet Switch Power Consumption              */\n"
            "/*     S  : Set Packet Switch Dimensions [H W D]             */\n"
-           "/*     C  : Add Packet Switch Component                      */\n"
            "/*     R  : Set The Rating Of The Ethernet Switch            */\n"
            "/*     W  : Set The IEEE Standard Of The Wireless Router     */\n"
            "/*     X  : Set The Data Rate Of The Wireless Router         */\n"
@@ -383,26 +382,6 @@ int process_menu_in(string menu_line)
         (*in_stream) >> new_depth;
         if(interactive)cin.get();
         (*cur_pswitch)->set_dimensions(new_height, new_width, new_depth);
-      }
-        break;
-
-      // Add Packet Switch Component
-      case 'C':
-      {
-        string new_name;
-        double new_power_rating, new_price;
-        cout << "Enter Component Information" << endl << endl;
-        cout << "Enter Component Name:";
-        (*in_stream) >> new_name;
-        (*cur_pswitch)->get_component((*cur_pswitch)->cindex)->set_name(new_name);
-        cout << "Enter Component Power Rating:";
-        (*in_stream) >> new_power_rating;
-        (*cur_pswitch)->get_component((*cur_pswitch)->cindex)->set_power_rating(new_power_rating);
-        cout << "Enter Component Price:";
-        (*in_stream) >> new_price;
-        (*cur_pswitch)->get_component((*cur_pswitch)->cindex)->set_price(new_price);
-        (*cur_pswitch)->cindex++;
-		if(interactive)cin.get();
       }
         break;
 

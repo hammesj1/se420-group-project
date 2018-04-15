@@ -35,13 +35,13 @@ PacketSwitch::PacketSwitch(std::string new_vendor, std::string new_model, int ne
    pps = new_pps;
    power = new_power;
    num_alive++;
-} 
+}
 
 // Destroy and Delete Track of Number of Packet Switches /////////////////////////////
 PacketSwitch::~PacketSwitch()
 {
    num_alive--;
-} 
+}
 
 // Check if Packet Sewitch is Empty or Defined as Default ////////////////////////////
 int PacketSwitch::isempty()
@@ -152,25 +152,17 @@ int PacketSwitch::toCout() const
    std::cout << "Packet Switch Per Port Speed         : " << get_pps() << " Mbps" << std::endl;
    std::cout << "Packet Switch Power Comsumption      : " << get_power() << " W" << std::endl;
    std::cout << "Packet Switch Dimensions (H x W x D) : " << get_dimensions_height() << " x " << get_dimensions_width() << " x " << get_dimensions_depth() << " inches" << std::endl;
-   
+
     if(net_ptr != NULL)
-          { 
+          {
             std::cout << *(net_ptr);
           }
-          else 
+          else
           {
             std::cout<<"Is not Network"<< std::endl;
           }
-          for(int i = 0; i < 20 ; i++)
-          {
-            if(loc_component_array[i].isempty()){}
-            else
-            std::cout << loc_component_array[i] << std::endl;
-          }
    return 0;
 }
-
-Component* PacketSwitch::get_component(int index){return &loc_component_array[index];}
 
 ostream &operator<<( ostream &output, const PacketSwitch &Ps)
 {
@@ -182,26 +174,16 @@ ostream &operator<<( ostream &output, const PacketSwitch &Ps)
           << "Packet Switch Power Comsumption      : " << Ps.get_power() << " W" << std::endl
           << "Packet Switch Dimensions (H x W x D) : " << Ps.dimensions.height << " x " << Ps.dimensions.width << " x " << Ps.dimensions.depth <<std::endl;
           //if(Ps.get_network_ptr()->isempty() == 0)
-          //if (Ps.get_vendor() == "" && Ps.get_model() == "" && Ps.get_num_ports() == 0 && Ps.get_pps() == 0.0 && Ps.get_power() == 0.0 && 
+          //if (Ps.get_vendor() == "" && Ps.get_model() == "" && Ps.get_num_ports() == 0 && Ps.get_pps() == 0.0 && Ps.get_power() == 0.0 &&
                //Ps.dimensions.height == 0.0 && Ps.dimensions.width == 0.0 && Ps.dimensions.depth == 0.0);
-  
+
           if(Ps.net_ptr != NULL)
-          { 
+          {
             output << *(Ps.net_ptr);
           }
-          else 
+          else
           {
             output<<"Is not Network"<< std::endl;
           }
-          for(int i = 0; i < 20 ; i++)
-          {
-            if(Ps.loc_component_array[i].isempty()){}
-            else
-            output << Ps.loc_component_array[i] << std::endl;
-          }
-          //for (Component com:Ps.loc_component_array)
-          //{
-             //output<<com<<std::endl;    
-          //}
    return output;
 };

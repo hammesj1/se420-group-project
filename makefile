@@ -10,7 +10,6 @@ OBJS =  \
   network.o \
   ethernetswitch.o \
   wirelessrouter.o \
-  component.o \
 
 # Here is a Make Macro defined by two Macro Expansions.
 # A Macro Expansion may be treated as a textual replacement of the Make Macro.
@@ -28,14 +27,14 @@ all : $(LINK_TARGET)
 # no Dependencies (right of the colon),
 # and two Commands (indented by tabs on the lines that follow).
 # The space before the colon is not required but added here for clarity.
-clean : 
+clean :
 	rm -f $(REBUILDABLES)
 	echo Clean done
 
 # There are two standard Targets your Makefile should probably have:
 # "all" and "clean", because they are often command-line Goals.
 # Also, these are both typically Artificial Targets, because they don't typically
-# correspond to real files named "all" or "clean".  
+# correspond to real files named "all" or "clean".
 
 # There is no required order to the list of rules as they appear in the Makefile.
 # Make will build its own dependency tree and only execute each rule only once
@@ -66,12 +65,11 @@ $(LINK_TARGET) : $(OBJS)
 # Dependency Rules are often used to capture header file dependencies.
 GP5_main.o : GP5devices.hpp GP5computer.hpp GP5printer.hpp GP5network.hpp
 GP5devices.o : GP5devices.hpp GP5network.hpp
-GP5computer.o : GP5computer.hpp GP5devices.hpp 
+GP5computer.o : GP5computer.hpp GP5devices.hpp
 GP5printer.o : GP5printer.hpp GP5devices.hpp
 GP5network.o : GP5network.hpp
 
 pswitch_main.o : packetswitch.hpp network.hpp ethernetswitch.hpp wirelessrouter.hpp
-component.o : component.hpp
 ethernetswitch.o : ethernetswitch.hpp
 network.o : network.hpp
 packetswitch.o : packetswitch.hpp
