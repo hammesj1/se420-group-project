@@ -1,53 +1,58 @@
-///////////////////////////////
-// CS225 Spring 2016 //////////
-// Cristian Garcia ////////////
-///////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//
+//  File Name: ethernetswitch.hpp
+//
+//  Description
+//
+//  Program is complete with three other source files (pswitch_main.cpp,
+//  ethernetswitch.cpp, and packetswitch.hpp). This module of the program
+//  contains the class declarations for the ethernetSwitch class which is
+//  inherited from the packetSwitch class.
+//
+//////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////
+
+// Pre-Processor Directives
+
+#include "packetswitch.hpp"
+
 #ifndef ETHERNETSWITCH_HPP_
 #define ETHERNETSWITCH_HPP_
-// Include Directives /////////
-#include <iostream>
-#include <string>
-#include "packetswitch.hpp"
-using std::ostream;
 
-// Decleration Section: //////////////////////////////////////////////////////////////
+
+// Decleration of the ethernetSwitch Class
+
 class EthernetSwitch:public PacketSwitch
 {
-   private:
-     // Data Hiding //////////////////////////////////////////////////////////////////
-     static int num_alive;
-     int packet_size;
-     int rating;
+	private:
 
-   public:
-     
-     // Constructor //////////////////////////////////////////////////////////////////
-     EthernetSwitch();
+		static int numAlive;
+		int numPorts;			// Number of physical ports on the switch
+		int perPortSpeed;		// Max Bandwith supported for each port (Mbps)
 
-     /////////////////////////////////////////////////////////////////////////////////
-     EthernetSwitch(int, int);
+	public:
 
-     // Destructor ///////////////////////////////////////////////////////////////////
-     ~EthernetSwitch();
+		EthernetSwitch();		// Default Construtor
+		EthernetSwitch(int, int);	// Overloaded Constructor
 
-     // Mutators ////////////////////////////////////////////
-     int set_packet_size(int);
-     int set_rating(int);
-     double compute_packetspersec();
-     int set_blank();
-     
-     // Accessors ///////////////////////////////////////////
-     static int get_num_alive();
-     int get_packet_size()const{return packet_size;}//;
-     int get_rating()const{return rating;}//;
+		~EthernetSwitch();		// Default Destructor
 
-     // Helpers //////////////////////////////////////////////////////////////////////
-     int isempty();
-     int display_mem_usage();
-     int toCout() const;
-     friend ostream& operator<< (ostream &output, const EthernetSwitch& Es);
 
+		// Mutator Methods
+		int set_numPorts(int);
+		int set_perPortSpeed(int);
+
+
+		// Accessor Methods
+		static int get_numAlive();
+		int get_numPorts()const{return numPorts;}
+		int get_perPortSpeed()const{return perPortSpeed;}
+
+
+		// Additional Methods (Helper Functions)
+		bool isempty();
+		int resetObject();
+		int display_memUsage();
+		int printDetails() const;
 };
 #endif

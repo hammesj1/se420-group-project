@@ -1,122 +1,126 @@
-///////////////////////////////
-// CS225 Spring 2016 //////////
-// Cristian Garcia ////////////
-///////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//
+//  File Name: ethernetswitch.cpp
+//
+//  Description
+//
+//  Program is complete with three other source files (pswitch_main.cpp,
+//  ethernetswitch.hpp, and packetswitch.hpp). This module of the program
+//  contains all function definitions for the ethernetSwitch class which is
+//  inherited from the packetSwitch class.
+//
+//////////////////////////////////////////////////////////////////////////////
 
-// Include Derectives /////////
+
 #include "ethernetswitch.hpp"
-#include <iostream>
-#include <string>
 
-// Implementation Section: ///////////////////////////////////////////////////////////
-int EthernetSwitch::num_alive=0;
+int EthernetSwitch::numAlive = 0;
 
-// Default Create and Keep Track Number of Packet Switches ///////////////////////////
+
+//////////////////////////////////////////
+//      Constructors and Destructor     //
+//////////////////////////////////////////
+
+// Default Constructor
 EthernetSwitch::EthernetSwitch()
 {
-   PacketSwitch();
-   packet_size = 0;
-   rating = 0;
-   num_alive++;
+	numPorts	= 0;
+	perPortSpeed	= 0;
+
+	numAlive++;
 }
 
-// Default Set Array of Packet Switch Objects ////////////////////////////////////////
-EthernetSwitch::EthernetSwitch(int new_packet_size, int new_rating)
+// Overloaded Constructor
+EthernetSwitch::EthernetSwitch(int new_numPorts, int new_perPortSpeed)
 {
-   packet_size = new_packet_size;
-   rating = new_rating;
-   num_alive++;
+	numPorts = new_numPorts;
+	perPortSpeed = new_perPortSpeed;
+
+	numAlive++;
 } 
 
-// Destroy and Delete Track of Number of Packet Switches /////////////////////////////
+// Default Destructor
 EthernetSwitch::~EthernetSwitch()
 {
-   num_alive--;
-} 
-
-// Check if Packet Sewitch is Empty or Defined as Default ////////////////////////////
-int EthernetSwitch::isempty()
-{
-  if(packet_size == 0 && rating == 0)
-   return 1;
-  else
-   return 0;
+	numAlive--;
 }
 
-// Receive Information from Main and Set Packet Switch Object Number of Ports ////////
-int EthernetSwitch::set_packet_size(int new_packet_size)
+
+//////////////////////////////////////////
+//          Predicate Functions         //
+//////////////////////////////////////////
+
+
+bool EthernetSwitch::isempty()
 {
-   packet_size = new_packet_size;
-   return 0;
+	if(numPorts == 0 && perPortSpeed == 0 && PacketSwitch::isempty() == 1)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
-// Receive Information from Main and Set Packet Switch Object Number of Ports ////////
-int EthernetSwitch::set_rating(int new_rating)
+
+//////////////////////////////////////////
+//          Mutator Functions           //
+//////////////////////////////////////////
+
+
+int EthernetSwitch::set_numPorts(int new_numPorts)		// Number of Physical Ports
 {
-   rating = new_rating;
-   return 0;
+	numPorts = new_numPorts;
+	return 0;
 }
 
-double EthernetSwitch::compute_packetspersec()///double pps, int num_ports, int packet_size) //////////////////     look!!!!!
+int EthernetSwitch::set_perPortSpeed(int new_perPortSpeed)	// Bandwidth per Physical Port (Mbps)
 {
-   packets_per_sec = ((pps * num_ports) / (8 * packet_size));
-   return 0;
+	perPortSpeed = new_perPortSpeed;
+	return 0;
 }
 
-// Set All Packet Switch Object Data to Blank or Default /////////////////////////////
-int EthernetSwitch::set_blank()
+int EthernetSwitch::resetObject()				// Reset/Clear Object values
 {
-   packet_size = 0;
-   rating = 0;
-   return 0;
+	numPorts	= 0;
+	perPortSpeed	= 0;
+
+	PacketSwitch::resetObject();				// Reset/Clear PacketSwitch values too
+
+	return 0;
 }
 
-// Retrive Number of Alive Packet Switch Objects /////////////////////////////////////
-int EthernetSwitch::get_num_alive()
+
+//////////////////////////////////////////
+//          Accessor Functions          //
+//////////////////////////////////////////
+
+
+int EthernetSwitch::get_numAlive()		// Number Alive
 {
-   return num_alive;
+	return numAlive;
 }
 
-// Determine and Display Packet Switch Array Memory Usage ////////////////////////////
-int EthernetSwitch::display_mem_usage()
+int EthernetSwitch::display_memUsage()		// Memory Usage by Ethernet Switch Objects
 {
-  std::cout << "Program Memory Usage: " << get_num_alive()* sizeof(EthernetSwitch) << std::endl;
-  return 0;
+	std::cout << "Memory Usage (Ethernet Switch): " << get_numAlive()* sizeof(EthernetSwitch) << std::endl;
+	return 0;
 }
 
-//Retrieve All Packet Switch Object Information /////////////////////////////////////
-int EthernetSwitch::toCout() const
+int EthernetSwitch::printDetails() const	// Display all data contained in the object
 {
-   std::cout << "Ethernet Switch Packet Size             : " << get_packet_size() << std::endl;
-   std::cout << "Ethernet Switch Rating                  : " << get_rating() << std::endl;
-   return 0;
+	PacketSwitch::printDetails();
+
+	std::cout << "Ethernet Switch Number of Ports      : " << get_numPorts() << std::endl;
+	std::cout << "Ethernet Switch Per Port Speed       : " << get_perPortSpeed() << std::endl << std::endl;
+	return 0;
 }
 
-///Component* PacketSwitch::get_component(int index){return &loc_component_array[index];}
-
-ostream &operator<<( ostream &output, const EthernetSwitch &Es)
-{
-          Es.PacketSwitch::toCout();
 
 
 
-   output << "Ethernet Switch Packet Size                : " << Es.get_packet_size() << std::endl
-          << "Ethernet Switch Rating                     : " << Es.get_rating() << std::endl;
-  
-          ////if(Es.net_ptr != NULL)
-          ////{ 
-          ////  output << *(Es.net_ptr);
-          ////}
-          ////else 
-          ////{
-          ////  output<<"Is not Network"<< std::endl;
-          ////}
-          ////for(int i = 0; i < 20 ; i++)
-          ////{
-          ////  if(Es.loc_component_array[i].isempty()){}
-          ////  else
-          ////  output << Es.loc_component_array[i] << std::endl;
-          ////}
-          
-   return output;
-};
+
+
+
+
