@@ -30,6 +30,7 @@ class PacketSwitch
 
 		std::string vendor;
 		std::string model;
+		std::string location;	// Physical location of the hardware (e.g. B72-129)
 
 		double	power;		// Power consumtion (in Watts)
 		int	mtu;		// Max Packet Size before fragmenting (Maximum Transmission Unit)
@@ -43,15 +44,16 @@ class PacketSwitch
 
 	public:
 
-		PacketSwitch();									// Default Constructor
-		PacketSwitch(std::string, std::string, double, int, float, float, float);	// Overloaded Constructor
+		PacketSwitch();										// Default Constructor
+		PacketSwitch(std::string, std::string, std::string, double, int, float, float, float);	// Overloaded Constructor
 
-		virtual ~PacketSwitch();							// Destructor
+		virtual ~PacketSwitch();								// Destructor
 
 
 		// Mutator Methods
 		int	set_vendor(std::string);
 		int	set_model(std::string);
+		int	set_location(std::string);
 		double	set_power(double);
 		int	set_mtu(int);
 		int	set_dimensions(float, float, float);
@@ -61,6 +63,7 @@ class PacketSwitch
 		static int get_numAlive();
 		std::string get_vendor()const{return vendor;}
 		std::string get_model()const{return model;}
+		std::string get_location()const{return location;}
 
 		double	get_power()const{return power;}
 		int	get_mtu()const{return mtu;}
