@@ -13,7 +13,7 @@
 
 #include "packetswitch.hpp"
 
-int PacketSwitch::numAlive=0;   // tracks packetSwitch objects in memory
+int PacketSwitch::numAlive = 0;   // tracks packetSwitch objects in memory
 
 
 //////////////////////////////////////////
@@ -78,7 +78,6 @@ bool PacketSwitch::isempty()
 //////////////////////////////////////////
 //          Mutator Functions           //
 //////////////////////////////////////////
-
 
 
 int PacketSwitch::set_vendor(std::string new_vendor)		// Vendor

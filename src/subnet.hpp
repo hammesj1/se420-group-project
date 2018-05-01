@@ -1,51 +1,67 @@
-///////////////////////////////
-// SQA Project 2018 ///////////
-// Cristian Garcia ////////////
-// Josh Hammes ////////////////
-///////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//
+//  File Name: subnet.hpp
+//
+//  Description
+//
+//  Program is complete with two other source files (pswitch_main.cpp and
+//  subnet.cpp). This module of the program contains the class
+//  declarations for the packetSwitch class.
+//
+//////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////
-#ifndef NETWORK_HPP_
-#define NETWORK_HPP_
 
-// Include Directives
+// Pre-processor Directives
+
 #include <iostream>
 #include <string>
-using std::ostream;
 
-// Decleration Section:
-class Network
+#ifndef SUBNET_HPP_
+#define SUBNET_HPP_
+
+
+// Declaration of the Subnet Class
+class Subnet
 {
-   private:
-     // Data Hiding
-     static int num_alive;
-     std::string label;
-     std::string ip_address;
-     int num_nodes;
+	private:
 
-   public:
-     // Constructor
-     Network();
-     Network(std::string, std::string, int);
+		static int numAlive;
 
-     // Destructor
-     ~Network();
+		std::string ipAddress;		// IP Address of the Subnet's root node
+		std::string CIDR;		// CIDR Identifier of the Subnet (e.g. 192.168.1/24)
+		std::string netMask;		// Subnet Mask (e.g. 255.255.255.0)
+		std::string defaultGate;	// Default Gateway in and out of the Subnet
 
-     // Mutators
-     int set_label(std::string);
-     int set_ip_address(std::string);
-     int set_num_nodes(int);
-     int set_blank();
+		int liveClients;		// Total number of clients that are live on the Subnet
 
-     // Accessors
-     static int get_num_alive();
-     std::string get_label()const{return label;}
-     std::string get_ip_address()const{return ip_address;}
-     int get_num_nodes()const{return num_nodes;}
+	public:
 
-     // Helpers
-     int isempty();
-     int toCout();
-     friend ostream& operator<< (ostream &output, const Network& Nt);
+		Subnet();								// Default Construtor
+		Subnet(std::string, std::string, std::string, std::string, int);	// Overloaded Constructor
+
+		~Subnet();								// Default Destructor
+
+
+		// Mutator Methods
+		int set_ipAddress(std::string);
+		int set_CIDR(std::string);
+		int set_netMask(std::string);
+		int set_defaultGate(std::string);
+		int set_liveClients(int);
+
+
+		// Accessor Methods
+		static int get_numAlive();
+		std::string get_ipAddress()const{return ipAddress;}
+		std::string get_CIDR()const{return CIDR;}
+		std::string get_netMask()const{return netMask;}
+		std::string get_defaultGate()const{return defaultGate;}
+		int get_liveClients()const{return liveClients;}
+
+
+		// Helper Methods
+		bool isempty();
+		int resetObject();
+		int printDetails() const;
 };
 #endif

@@ -1,93 +1,141 @@
-///////////////////////////////
-// SQA Project 2018 ///////////
-// Cristian Garcia ////////////
-// Josh Hammes ////////////////
-///////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//
+//  File Name: subnet.cpp
+//
+//  Description
+//
+//  Program is complete with two other source files (pswitch_main.cpp and
+//  subnet.hpp). This module of the program contains all function
+//  definitions for the packetSwitch class.
+//
+//////////////////////////////////////////////////////////////////////////////
 
-// Include Derectives
-#include "network.hpp"
-#include <iostream>
-#include <string>
-// Implementation Section
 
-// Default Create and Keep Track Number of Networks
-int Network::num_alive=0;
-Network::Network()
+#include "subnet.hpp"
+
+int Subnet::numAlive = 0;   // tracks Subnet objects in memory
+
+
+//////////////////////////////////////////
+//      Constructors and Destructor     //
+//////////////////////////////////////////
+
+// Default Constructor
+Subnet::Subnet()
 {
-   label = "";
-   ip_address = "";
-   num_nodes = 0;
-   num_alive++;
+	ipAddress	= "";
+	CIDR		= "";
+	netMask		= "";
+	defaultGate	= "";
+	liveClients	= 0;
+
+	numAlive++;
 }
 
-// Destroy and Delete Track of Number of Networks
-Network::~Network()
+// Overloaded Constructor
+Subnet::Subnet(std::string new_ipAddress, std::string new_CIDR, std::string new_netMask, 
+		std::string new_defaultGate, int new_liveClients)
 {
-   num_alive--;
+	ipAddress	= new_ipAddress;
+	CIDR		= new_CIDR;
+	netMask		= new_netMask;
+	defaultGate	= new_defaultGate;
+	liveClients	= new_liveClients;
+
+	numAlive++;
 }
 
-// Check if Network is Empty or Defined as Default
-int Network::isempty()
+// Default Destructor
+Subnet::~Subnet()
 {
-  if(label == "" && ip_address == "" && num_nodes == 0)
-   return 1;
-  else
+   numAlive--;
+}
+
+
+//////////////////////////////////////////
+//          Predicate Functions         //
+//////////////////////////////////////////
+
+
+bool Subnet::isempty()
+{
+	if(ipAddress == "" && CIDR == "" && netMask == "" && defaultGate == "" && liveClients == 0)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+
+//////////////////////////////////////////
+//          Mutator Functions           //
+//////////////////////////////////////////
+
+
+int Subnet::set_ipAddress(std::string new_ipAddress)		// Root Node IP Address
+{
+	ipAddress = new_ipAddress;
+	return 0;
+}
+
+int Subnet::set_CIDR(std::string new_CIDR)			// CIDR Identifier
+{
+	CIDR = new_CIDR;
+	return 0;
+}
+
+int Subnet::set_netMask(std::string new_netMask)		// Subnet Mask
+{
+	netMask = new_netMask;
+	return 0;
+}
+
+int Subnet::set_defaultGate(std::string new_defaultGate)	// Default Gateway
+{
+	defaultGate = new_defaultGate;
+	return 0;
+}
+
+int Subnet::set_liveClients(int new_liveClients)		// Clients Live on the Subnet
+{
+	liveClients = new_liveClients;
+	return 0;
+}
+
+int Subnet::resetObject()	// Reset/Clear Object values
+{
+	ipAddress	= "";
+	CIDR		= "";
+	netMask		= "";
+	defaultGate	= "";
+	liveClients	= 0;
+
+	return 0;
+}
+
+
+//////////////////////////////////////////
+//          Accessor Functions          //
+//////////////////////////////////////////
+
+
+int Subnet::get_numAlive()		// Number Alive
+{
+	return numAlive;
+}
+
+int Subnet::printDetails() const	// Display all data contained in the object
+{
+	std::cout << " Hardware Subnet Details " << std::endl;
+	std::cout << "-------------------------" << std::endl;
+	std::cout << "Subnet Root Node IP Address          : " << get_ipAddress() << std::endl;
+	std::cout << "Subnet CIDR Identifier               : " << get_CIDR() << std::endl;
+	std::cout << "Subnet Mask                          : " << get_netMask() << std::endl;
+	std::cout << "Subnet Default Gateway               : " << get_defaultGate() << std::endl;
+	std::cout << "Subnet Live Clients                  : " << get_liveClients() << " clients"  << std::endl << std::endl;
+
    return 0;
 }
-
-// Receive Information from Main App and Set Network Object Label
-int Network::set_label(std::string new_label)
-{
-   label = new_label;
-   return 0;
-}
-
-// Receive Information from Main App and Set Network Object IP Address
-int Network::set_ip_address(std::string new_ip_address)
-{
-   ip_address = new_ip_address;
-   return 0;
-}
-
-// Receive Information from Main App and Set Network Object Number of Nodes
-int Network::set_num_nodes(int new_num_nodes)
-{
-   num_nodes = new_num_nodes;
-   return 0;
-}
-
-// Set All Network Object Data to Blank or Default
-int Network::set_blank()
-{
-   label = "";
-   ip_address = "";
-   num_nodes = 0;
-   return 0;
-}
-
-// Retrive Number of Alive Network Objects
-int Network::get_num_alive()
-{
-   return num_alive;
-}
-
-// Retrieve Network Object or Ojects Information
-int Network::toCout()
-{
-   std::cout << "Connected Network Details" << std::endl;
-   std::cout << "-------------------------" << std::endl;
-   std::cout << "Network Label                        : " << get_label() << std::endl;
-   std::cout << "Network IP Address                   : " << get_ip_address() << std::endl;
-   std::cout << "Number of Network Nodes              : " << get_num_nodes() << " nodes"  << std::endl;
-   return 0;
-}
-
-ostream &operator<<( ostream &output, const Network &Nt)
-{
-   output << "Connected Network Details" << std::endl
-          << "-------------------------" << std::endl
-          << "Network Label                        : " << Nt.get_label() << std::endl
-          << "Network IP Address                   : " << Nt.get_ip_address() << std::endl
-          << "Number of Network Nodes              : " << Nt.get_num_nodes() << " nodes"  << std::endl;
-   return output;
-};

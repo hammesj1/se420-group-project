@@ -1,12 +1,12 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  File Name: ethernetswitch.cpp
+//  File Name: wirelessrouter.cpp
 //
 //  Description
 //
 //  Program is complete with three other source files (pswitch_main.cpp,
-//  ethernetswitch.hpp, and packetswitch.hpp). This module of the program
-//  contains all function definitions for the ethernetSwitch class which is
+//  wirelessrouter.hpp, and packetswitch.hpp). This module of the program
+//  contains all function definitions for the WirelessRouter class which is
 //  inherited from the packetSwitch class.
 //
 //////////////////////////////////////////////////////////////////////////////
@@ -120,7 +120,8 @@ int WirelessRouter::display_memUsage()		// Memory Usage by Ethernet Switch Objec
 int WirelessRouter::printDetails() const	// Display all data contained in the object
 {
 	PacketSwitch::printDetails();
-
+	std::cout << " Wireless Router Details " << std::endl;
+	std::cout << "-------------------------" << std::endl;
 	std::cout << "Wireless Router IEEE Standard        : " << get_ieeeStd() << std::endl;
 	std::cout << "Wireless Router Maximum Clients      : " << get_maxClients() << std::endl;
 	std::cout << "Wireless Router Maximum Bandwidth    : " << get_maxBandwidth() << std::endl << std::endl;

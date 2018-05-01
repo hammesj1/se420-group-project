@@ -11,7 +11,7 @@
 
 EXECUTABLE=psp.exe
 SRC_FOLDER=src
-SOURCES=packetswitch.cpp ethernetswitch.cpp wirelessrouter.cpp newMain.cpp 
+SOURCES=packetswitch.cpp ethernetswitch.cpp wirelessrouter.cpp subnet.cpp newMain.cpp 
 OBJ_FOLDER=obj
 OTHER_CAT_FILES=Makefile
 EXECUTE=

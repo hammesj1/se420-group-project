@@ -111,7 +111,8 @@ int EthernetSwitch::display_memUsage()		// Memory Usage by Ethernet Switch Objec
 int EthernetSwitch::printDetails() const	// Display all data contained in the object
 {
 	PacketSwitch::printDetails();
-
+	std::cout << " Ethernet Switch Details " << std::endl;
+	std::cout << "-------------------------" << std::endl;
 	std::cout << "Ethernet Switch Number of Ports      : " << get_numPorts() << std::endl;
 	std::cout << "Ethernet Switch Per Port Speed       : " << get_perPortSpeed() << std::endl << std::endl;
 	return 0;

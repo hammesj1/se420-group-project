@@ -11,8 +11,8 @@
 //////////////////////////////////////////////////////////////////////////////
 
 
-
 // Pre-processor Directives
+
 #include <iostream>
 #include <string>
 //#include "network.hpp"
@@ -31,7 +31,6 @@ class PacketSwitch
 		std::string vendor;
 		std::string model;
 		std::string location;	// Physical location of the hardware (e.g. B72-129)
-
 		double	power;		// Power consumtion (in Watts)
 		int	mtu;		// Max Packet Size before fragmenting (Maximum Transmission Unit)
 
@@ -64,10 +63,8 @@ class PacketSwitch
 		std::string get_vendor()const{return vendor;}
 		std::string get_model()const{return model;}
 		std::string get_location()const{return location;}
-
 		double	get_power()const{return power;}
 		int	get_mtu()const{return mtu;}
-
 		float	get_height()const{return dimensions.height;}
 		float	get_width()const{return dimensions.width;}
 		float	get_depth()const{return dimensions.depth;}
