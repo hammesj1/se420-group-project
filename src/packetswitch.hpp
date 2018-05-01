@@ -15,7 +15,8 @@
 
 #include <iostream>
 #include <string>
-//#include "network.hpp"
+
+#include "subnet.hpp"
 
 #ifndef PACKETSWITCH_HPP_
 #define PACKETSWITCH_HPP_
@@ -41,21 +42,25 @@ class PacketSwitch
 			float depth;
 		} dimensions;
 
+		Subnet* netPtr = NULL;
+
 	public:
 
-		PacketSwitch();										// Default Constructor
-		PacketSwitch(std::string, std::string, std::string, double, int, float, float, float);	// Overloaded Constructor
+		PacketSwitch();								// Default Constructor
+		PacketSwitch(std::string, std::string, std::string, double, int,	// Overloaded Constructor
+				 float, float, float, Subnet*);
 
-		virtual ~PacketSwitch();								// Destructor
+		virtual ~PacketSwitch();						// Destructor
 
 
 		// Mutator Methods
-		int	set_vendor(std::string);
-		int	set_model(std::string);
-		int	set_location(std::string);
-		double	set_power(double);
-		int	set_mtu(int);
-		int	set_dimensions(float, float, float);
+		int set_vendor(std::string);
+		int set_model(std::string);
+		int set_location(std::string);
+		int set_power(double);
+		int set_mtu(int);
+		int set_dimensions(float, float, float);
+		int set_subnet(Subnet*);
 
 
 		// Accessor Methods
@@ -68,6 +73,12 @@ class PacketSwitch
 		float	get_height()const{return dimensions.height;}
 		float	get_width()const{return dimensions.width;}
 		float	get_depth()const{return dimensions.depth;}
+
+		std::string get_subnet_ipAddress()const{return netPtr->get_ipAddress();}
+		std::string get_subnet_CIDR()const{return netPtr->get_CIDR();}
+		std::string get_subnet_netMask()const{return netPtr->get_netMask();}
+		std::string get_subnet_defaultGate()const{return netPtr->get_defaultGate();}
+		int get_subnet_liveClients()const{return netPtr->get_liveClients();}
 
 
 		// Additional Methods (Helper Functions)

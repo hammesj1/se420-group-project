@@ -36,8 +36,8 @@ PacketSwitch::PacketSwitch()
 }
 
 // Overloaded Constructor
-PacketSwitch::PacketSwitch(std::string new_vendor, std::string new_model, std::string new_location,
-				double new_power, int new_mtu, float height, float width, float depth)
+PacketSwitch::PacketSwitch(std::string new_vendor, std::string new_model, std::string new_location, double new_power, 
+				int new_mtu, float height, float width, float depth, Subnet* new_netPtr = NULL)
 {
         vendor          = new_vendor;
         model           = new_model;
@@ -45,6 +45,7 @@ PacketSwitch::PacketSwitch(std::string new_vendor, std::string new_model, std::s
         power           = new_power;
         mtu             = new_mtu;
         dimensions      = {height, width, depth};
+	netPtr		= new_netPtr;
 
         numAlive++;
 }
@@ -64,7 +65,7 @@ PacketSwitch::~PacketSwitch()
 bool PacketSwitch::isempty()
 {
         if(vendor == "" && model == "" && location == "" && power == 0 && mtu == 0 &&
-                dimensions.height == 0.0 && dimensions.width == 0.0 && dimensions.depth == 0.0)
+                dimensions.height == 0.0 && dimensions.width == 0.0 && dimensions.depth == 0.0) // Probably need to check for NULL netPtr here
         {
                 return true;
         }
@@ -98,7 +99,7 @@ int PacketSwitch::set_location(std::string new_location)	// Physical Location
         return 0;
 }
 
-double PacketSwitch::set_power(double new_power)		// Power
+int PacketSwitch::set_power(double new_power)			// Power
 {
         power = new_power;
         return 0;
@@ -118,6 +119,12 @@ int PacketSwitch::set_dimensions(float new_height, float new_width, float new_de
         return 0;
 }
 
+int PacketSwitch::set_subnet(Subnet* new_netPtr)		// Subnet Pointer
+{
+	netPtr = new_netPtr;
+	return 0;
+}
+
 int PacketSwitch::resetObject()         // Reset/Clear Object values
 {
         vendor          = "";
@@ -126,6 +133,8 @@ int PacketSwitch::resetObject()         // Reset/Clear Object values
         power           = 0;
         mtu             = 0;
         dimensions      = {0.0, 0.0, 0.0};
+
+	// Probably need to call subnet destructor and set netPtr = NULL here
 
         return 0;
 }
@@ -155,5 +164,15 @@ int PacketSwitch::printDetails() const		// Display all data contained in the obj
 	std::cout << "Packet Switch Power Comsumption      : " << get_power() << " W" << std::endl;
 	std::cout << "Packet Switch MTU                    : " << get_mtu() << " Bytes" << std::endl;
 	std::cout << "Packet Switch Dimensions (H x W x D) : " << get_height() << " x " << get_width() << " x " << get_depth() << std::endl << std::endl;
+
+	if( !( netPtr->isempty() ) )
+	{
+		netPtr->printDetails();
+	}
+	
 	return 0;
 }
+
+
+
+
