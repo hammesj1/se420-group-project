@@ -165,9 +165,12 @@ int PacketSwitch::printDetails() const		// Display all data contained in the obj
 	std::cout << "Packet Switch MTU                    : " << get_mtu() << " Bytes" << std::endl;
 	std::cout << "Packet Switch Dimensions (H x W x D) : " << get_height() << " x " << get_width() << " x " << get_depth() << std::endl << std::endl;
 
-	if( !( netPtr->isempty() ) )
+	if( netPtr != NULL )
 	{
-		netPtr->printDetails();
+		if( !( netPtr->isempty() ) )
+		{
+			netPtr->printDetails();
+		}
 	}
 	
 	return 0;

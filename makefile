@@ -9,9 +9,11 @@
 #	App Variables
 #####################################################################################
 
-EXECUTABLE=psp.exe
+#EXECUTABLE=psp.exe
+EXECUTABLE=test.exe
 SRC_FOLDER=src
-SOURCES=packetswitch.cpp ethernetswitch.cpp wirelessrouter.cpp subnet.cpp newMain.cpp 
+#SOURCES=packetswitch.cpp ethernetswitch.cpp wirelessrouter.cpp subnet.cpp newMain.cpp
+SOURCES=packetswitch.cpp ethernetswitch.cpp wirelessrouter.cpp subnet.cpp testDriver.cpp
 OBJ_FOLDER=obj
 OTHER_CAT_FILES=Makefile
 EXECUTE=
@@ -25,7 +27,7 @@ CC=g++
 
 # Compiler Flags
 CC_DEBUG_LEVEL=-g
-CC_FLAGS=-Wall -std=c++11
+CC_FLAGS=-Wall -std=c++11 -ftest-coverage
 
 # Linker Flags
 LD_DEBUG_LEVEL=$(CC_DEBUG_LEVEL)
@@ -52,7 +54,7 @@ all: build
 build: genre_file_struct $(SRC_PATH) $(EXECUTABLE)
 
 clean:
-			rm -rf $(OBJ_FOLDER) $(EXECUTABLE);
+			rm -rf $(OBJ_FOLDER) $(EXECUTABLE) *.d sclogic *.gcov *.gcno *.gcda *.info;
 
 rebuild: clean build
 

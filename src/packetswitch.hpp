@@ -74,6 +74,7 @@ class PacketSwitch
 		float	get_width()const{return dimensions.width;}
 		float	get_depth()const{return dimensions.depth;}
 
+		Subnet* get_netPtr()const{return netPtr;}
 		std::string get_subnet_ipAddress()const{return netPtr->get_ipAddress();}
 		std::string get_subnet_CIDR()const{return netPtr->get_CIDR();}
 		std::string get_subnet_netMask()const{return netPtr->get_netMask();}
